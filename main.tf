@@ -86,7 +86,7 @@ variable "user2_lastname" {
 ## example of how to create a new user in your OneLogin environment using the V2 Users endpoint
 resource "restapi_object" "oneloginuser1" {
   path = "/api/2/users"
-  data = "{ \"email\": \"${var.user2_email}\", \"username\": \"${var.user2_username}\", \"firstname\": \${var.user2_firstname}\", \"lastname\": \"${var.user2_lastname}\"}"
+  data = "{ \"email\": \"${var.user2_email}\", \"username\": \"${var.user2_username}\", \"firstname\": \"${var.user2_firstname}\", \"lastname\": \"${var.user2_lastname}\"}"
 }
 
 #### Users via OneLogin Provider
