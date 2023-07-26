@@ -42,22 +42,22 @@ variable "ol_client_secret" {
 
 variable "user1_username" {
   type = string
-  default = ""
+  default = "john.smith"
 }
 
 variable "user1_email" {
   type = string
-  default = ""
+  default = "john.smith@johnsmithmail.com"
 }
 
 variable "user2_username" {
   type = string
-  default = ""
+  default = "joan.smith"
 }
 
 variable "user2_email" {
   type = string
-  default = ""
+  default = "joan.smith@joansmithmail.com"
 }
 
 ############ USERS ################
