@@ -9,11 +9,9 @@ terraform {
       version = "0.2.0"
     }
   }
-}
+} 
 
- 
 provider "restapi" {
-
   # Configuration options
    uri                  = https://api.us.onelogin.com/
    write_returns_object = true
@@ -30,6 +28,28 @@ client_id = var.client_id
 client_secret = var.client_secret
 }
 
+########## VARS ###########
+
+variable "user1_username" {
+  type = string
+  default = ""
+}
+
+variable "user1_email" {
+  type = string
+  default = ""
+}
+
+variable "user2_username" {
+  type = string
+  default = ""
+}
+
+variable "user2_email" {
+  type = string
+  default = ""
+}
+
 ############ USERS ################
 
 #### Users via generic REST Provider
@@ -37,15 +57,15 @@ client_secret = var.client_secret
 ## example of how to create a new user in your OneLogin environment using the V2 Users endpoint
 resource "restapi_object" "oneloginuser1" {
   path = "/api/2/users"
-  data = "{ \"email\": \"${var.da_user2_email}\", \"username\": \"${var.da_user2_username}\", \"firstname\": \"Davennnnnn\", \"lastname\": \"Boe\"}"
+  data = "{ \"email\": \"${var.user2_email}\", \"username\": \"${var.user2_username}\", \"firstname\": \"Davennnnnn\", \"lastname\": \"Boe\"}"
 }
 
 #### Users via OneLogin Provider
 
 # create some standard user for testing
 resource onelogin_users username {
-  username = var.da_user1_username
-  email    = var.da_user1_email
+  username = var.user1_username
+  email    = var.user1_email
   firstname = "tim"
   lastname = "test"
   status = 1
