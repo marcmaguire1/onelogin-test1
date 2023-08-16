@@ -55,6 +55,7 @@ variable "ol_smart_hook_function" {
   default = <<EOF
     exports.handler = async (context) => {
 const NewUserPol_ID = process.env.NewUserPol;
+console.log("Context: ", context);
 
   return {
     success: true,
