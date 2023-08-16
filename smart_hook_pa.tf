@@ -57,6 +57,14 @@ variable "ol_policy_id_new_user" {
   default = "1234"
 }
 
+############ Var for Smart Hook function ################
+
+variable "ol_smart_hook_function" {
+  type = string
+  description = "function for the pre-auth smart hook"
+  default = "ZXhwb3J0cy5oYW5kbGVyID0gYXN5bmMgKGNvbnRleHQpID0+IHsKICByZXR1cm4gewogICAgc3VjY2VzczogdHJ1ZSwKICAgIHVzZXI6IHsKICAgICAgcG9saWN5X2lkOiBjb250ZXh0LnVzZXIucG9saWN5X2lkCiAgICB9CiAgfQp9"
+}
+
 ############ Smart Hook env vars ################
 
 ## example of how to create some env vars for Smart Hooks to use
@@ -73,6 +81,6 @@ resource "restapi_object" "oneloginsmarthook_vars" {
 resource "restapi_object" "oneloginsmarthook_pa" {
   path = "/api/2/hooks"
   depends_on = [restapi_object.oneloginsmarthook_vars]
-  data = "{ \"type\": \"pre-authentication\", \"disabled\":false, \"runtime\":\"nodejs18.x\", \"context_version\":\"1.1.0\", \"retries\":0, \"timeout\":1, \"options\":{\"location_enabled\":true, \"risk_enabled\":true, \"mfa_device_info_enabled\":true}, \"env_vars\":[\"${var.ol_smart_hook_env_var1}\"], \"packages\": {\"axios\": \"0.21.1\"} , \"function\":\"ZXhwb3J0cy5oYW5kbGVyID0gYXN5bmMgKGNvbnRleHQpID0+IHsKICByZXR1cm4gewogICAgc3VjY2VzczogdHJ1ZSwKICAgIHVzZXI6IHsKICAgICAgcG9saWN5X2lkOiBjb250ZXh0LnVzZXIucG9saWN5X2lkCiAgICB9CiAgfQp9\"}"
+  data = "{ \"type\": \"pre-authentication\", \"disabled\":false, \"runtime\":\"nodejs18.x\", \"context_version\":\"1.1.0\", \"retries\":0, \"timeout\":1, \"options\":{\"location_enabled\":true, \"risk_enabled\":true, \"mfa_device_info_enabled\":true}, \"env_vars\":[\"${var.ol_smart_hook_env_var1}\"], \"packages\": {\"axios\": \"0.21.1\"} , \"function\":\"${var.ol_smart_hook_function}\"}"
 }
 
