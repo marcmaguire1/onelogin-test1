@@ -62,7 +62,7 @@ variable "ol_policy_id_new_user" {
 variable "ol_smart_hook_function" {
   type = string
   description = "function for the pre-auth smart hook"
-  default = "ZXhwb3J0cy5oYW5kbGVyID0gYXN5bmMgKGNvbnRleHQpID0+IHsKICByZXR1cm4gewogICAgc3VjY2VzczogdHJ1ZSwKICAgIHVzZXI6IHsKICAgICAgcG9saWN5X2lkOiBjb250ZXh0LnVzZXIucG9saWN5X2lkCiAgICB9CiAgfQp9"
+  default = "ZXhwb3J0cy5oYW5kbGVyID0gYXN5bmMgKGNvbnRleHQpID0+IHsKY29uc3QgTmV3VXNlclBvbF9JRCA9IHByb2Nlc3MuZW52Lk5ld1VzZXJQb2w7CgogIHJldHVybiB7CiAgICBzdWNjZXNzOiB0cnVlLAogICAgdXNlcjogewogICAgICBwb2xpY3lfaWQ6IGNvbnRleHQudXNlci5wb2xpY3lfaWQKICAgIH0KICB9Cn0="
 }
 
 ############ Smart Hook env vars ################
