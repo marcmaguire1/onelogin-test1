@@ -13,12 +13,12 @@ terraform {
 
 provider "restapi" {
   # Configuration options
-   uri                  = "https://api.us.onelogin.com/"
+   uri                  = "https://${ol_subdomain}.onelogin.com/"
    write_returns_object = true
    oauth_client_credentials {
       oauth_client_id = var.ol_client_id
       oauth_client_secret = var.ol_client_secret
-      oauth_token_endpoint = "https://api.us.onelogin.com/auth/oauth2/v2/token"
+      oauth_token_endpoint = "https://${ol_subdomain}.onelogin.com/auth/oauth2/v2/token"
   }
 }
 
@@ -29,6 +29,11 @@ client_secret = var.ol_client_secret
 }
 
 ########## Terraform VARS ###########
+
+variable "ol_subdomain" {
+  type = string
+  description = "Subdomain name for target OneLogin env"
+}
 
 variable "ol_client_id" {
   type = string
