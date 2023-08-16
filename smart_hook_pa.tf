@@ -1,3 +1,12 @@
+/* This Terraform configuration will create a "Minimum Viable" pre authentication smart hook (with context logging enabled) in 
+your OneLogin environment. It also creates a smart hook environment variable (in this example representing the user security policy id which we 
+would like to switch brand new users into ) which is then included in the smart hook configuration so that it can be used within the smart hook 
+function itself. In the function a constant called NewUserPol_ID is then declared from this smart hook environment variable. The policy ID for 
+this new user policy ID will vary per Onelogin environment so can be set in the .tfvars file as appropriate. This minimum viable smart hook
+does not actually use the Policy ID as it just passes through all request to the statically assigned policy for a user so it is just shown
+here for illustrative purposes */
+
+
 terraform {
   required_providers {
     restapi = {
