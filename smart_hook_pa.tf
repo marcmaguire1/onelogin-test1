@@ -45,6 +45,12 @@ variable "ol_client_secret" {
   description = "Client Secret for API Credential created in target OneLogin env"
 }
 
+variable "ol_smart_hook_env_var1" {
+  type = string
+  description = "Name of the Smart Hooks Env Var for the New user first time login policy- used in pre-auth smart hook"
+  default = "test"
+}
+
 variable "ol_policy_id_new_user" {
   type = string
   description = "User Security Policy ID for New user first time login- used in pre-auth smart hook"
@@ -56,7 +62,7 @@ variable "ol_policy_id_new_user" {
 ## example of how to create some env vars for Smart Hooks to use
 resource "restapi_object" "oneloginsmarthook_vars" {
   path = "/api/2/hooks/envs"
-  data = "{ \"name\": \"pol_id_new_user\", \"value\": \"${var.ol_policy_id_new_user}\"}"
+  data = "{ \"name\": \"${var.ol_smart_hook_env_var1}\", \"value\": \"${var.ol_policy_id_new_user}\"}"
 }
 
 ############ Smart Hook ################
