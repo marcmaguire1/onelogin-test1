@@ -62,18 +62,12 @@ variable "ol_policy_id_new_user" {
 variable "ol_smart_hook_function" {
   type = string
   description = "function for the pre-auth smart hook"
-  default = "ZXhwb3J0cy5oYW5kbGVyID0gYXN5bmMgKGNvbnRleHQpID0+IHsKY29uc3QgTmV3VXNlclBvbF9JRCA9IHByb2Nlc3MuZW52Lk5ld1VzZXJQb2w7CgogIHJldHVybiB7CiAgICBzdWNjZXNzOiB0cnVlLAogICAgdXNlcjogewogICAgICBwb2xpY3lfaWQ6IGNvbnRleHQudXNlci5wb2xpY3lfaWQKICAgIH0KICB9Cn0="
-}
-
-variable "ol_smart_hook_function2" {
-  type = string
-  description = "function for the pre-auth smart hook"
-  default = "<<EOF
+  default = <<EOF
     exports.handler = async context => {
       console.log("Pre-auth executing for " + context.user.user_identifier);
       return { user: context.user };
     };
-    EOF"
+    EOF
 }
 
 ############ Smart Hook env vars ################
@@ -92,6 +86,6 @@ resource "restapi_object" "oneloginsmarthook_vars" {
 resource "restapi_object" "oneloginsmarthook_pa" {
   path = "/api/2/hooks"
   depends_on = [restapi_object.oneloginsmarthook_vars]
-  data = "{ \"type\": \"pre-authentication\", \"disabled\":false, \"runtime\":\"nodejs18.x\", \"context_version\":\"1.1.0\", \"retries\":0, \"timeout\":1, \"options\":{\"location_enabled\":true, \"risk_enabled\":true, \"mfa_device_info_enabled\":true}, \"env_vars\":[\"${var.ol_smart_hook_env_var1}\"], \"packages\": {\"axios\": \"0.21.1\"} , \"function\":\"${var.ol_smart_hook_function2}\"}"
+  data = "{ \"type\": \"pre-authentication\", \"disabled\":false, \"runtime\":\"nodejs18.x\", \"context_version\":\"1.1.0\", \"retries\":0, \"timeout\":1, \"options\":{\"location_enabled\":true, \"risk_enabled\":true, \"mfa_device_info_enabled\":true}, \"env_vars\":[\"${var.ol_smart_hook_env_var1}\"], \"packages\": {\"axios\": \"0.21.1\"} , \"function\":\"${base64encode(var.ol_smart_hook_function)}\"}"
 }
 
