@@ -28,7 +28,7 @@ client_id = var.ol_client_id
 client_secret = var.ol_client_secret
 }
 
-########## VARS ###########
+########## Terraform VARS ###########
 
 variable "ol_client_id" {
   type = string
@@ -40,12 +40,18 @@ variable "ol_client_secret" {
   description = "Client Secret for API Credential created in target OneLogin env"
 }
 
+variable "ol_policy_id_new_user" {
+  type = string
+  description = "User Security Policy ID for New user first time login- used in pre-auth smart hook"
+  default = "1234"
+}
+
 ############ Smart Hook env vars ################
 
 ## example of how to create some env vars for Smart Hooks to use
 resource "restapi_object" "oneloginsmarthook_vars" {
   path = "/api/2/hooks/envs"
-  data = "{ \"name\": \"google_pol_id\", \"value\": \"351165\"}"
+  data = "{ \"name\": \"pol_id_new_user\", \"value\": \"${var.ol_policy_id_new_user}\"}"
 }
 
 ############ Smart Hook ################
