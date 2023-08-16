@@ -4,10 +4,6 @@ terraform {
       source = "Mastercard/restapi"
       version = "1.18.0"
     }
-    onelogin = {
-      source  = "onelogin/onelogin"
-      version = "0.2.0"
-    }
   }
 } 
 
@@ -20,12 +16,6 @@ provider "restapi" {
       oauth_client_secret = var.ol_client_secret
       oauth_token_endpoint = "https://${var.ol_subdomain}.onelogin.com/auth/oauth2/v2/token"
   }
-}
-
-provider "onelogin" {
-  # Configuration options
-client_id = var.ol_client_id
-client_secret = var.ol_client_secret
 }
 
 ########## Terraform VARS ###########
@@ -63,10 +53,16 @@ variable "ol_smart_hook_function" {
   type = string
   description = "function for the pre-auth smart hook"
   default = <<EOF
-    exports.handler = async context => {
-      console.log("Pre-auth executing for " + context.user.user_identifier);
-      return { user: context.user };
-    };
+    exports.handler = async (context) => {
+const NewUserPol_ID = process.env.NewUserPol;
+
+  return {
+    success: true,
+    user: {
+      policy_id: context.user.policy_id
+    }
+  }
+}
     EOF
 }
 
@@ -80,12 +76,9 @@ resource "restapi_object" "oneloginsmarthook_vars" {
 
 ############ Smart Hook ################
 
-#### create smart hook via generic REST Provider
-
 ## example of how to create a new pre auth smarthook in your OneLogin environment
 resource "restapi_object" "oneloginsmarthook_pa" {
   path = "/api/2/hooks"
   depends_on = [restapi_object.oneloginsmarthook_vars]
   data = "{ \"type\": \"pre-authentication\", \"disabled\":false, \"runtime\":\"nodejs18.x\", \"context_version\":\"1.1.0\", \"retries\":0, \"timeout\":1, \"options\":{\"location_enabled\":true, \"risk_enabled\":true, \"mfa_device_info_enabled\":true}, \"env_vars\":[\"${var.ol_smart_hook_env_var1}\"], \"packages\": {\"axios\": \"0.21.1\"} , \"function\":\"${base64encode(var.ol_smart_hook_function)}\"}"
 }
-
