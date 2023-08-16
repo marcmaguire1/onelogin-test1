@@ -54,7 +54,7 @@ variable "ol_smart_hook_function" {
   description = "function for the pre-auth smart hook"
   default = <<EOF
     exports.handler = async (context) => {
-const NewUserPol_ID = process.env.${var.ol_smart_hook_env_var1};
+const NewUserPol_ID = process.env.NewUserPol;
 console.log("Context: ", context);
 
   return {
